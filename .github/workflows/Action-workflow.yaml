@@ -13,8 +13,8 @@ jobs:
     runs-on: self-hosted
     steps: 
       - name: Set tag on workflow_dispatch
-        if: githup.even_name == 'workflow_dispatch'
-        run: echo "${{ githup.even.inputs.version }}"
+        if: github.even_name == 'workflow_dispatch'
+        run: echo "${{ github.even.inputs.version }}"
       - name: checkout
         uses: actions/checkout@v3
       - name: docker login
@@ -27,12 +27,12 @@ jobs:
       - name: build & push
         run: |
           cd Docker
-          docker build -t supachai01/githup_action:${{githup.even.inputs.version }} .
-          docker push supachai01/githup:${{ githup.even.inputs.version }}
+          docker build -t supachai01/github_action:${{github.even.inputs.version }} .
+          docker push supachai01/github:${{ github.even.inputs.version }}
 
   Deploy: 
     needs: build
     run-no: self-hosted
     steps:
       - name: Deploy container
-        run: docker run -d -p 8080:80 supachai01/githup:${{ githup.even.inputs.version }}
+        run: docker run -d -p 8080:80 supachai01/github:${{ github.even.inputs.version }}
