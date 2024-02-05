@@ -1,38 +1,12 @@
-name: Action-workflow
-
-on:
+name: workflow
+on: 
   workflow_dispatch:
     inputs:
-      version:  
-        description: 'input version'
-        default: 'latest'
-        required: true
-
-jobs: 
-  prepare: 
-    runs-on: self-hosted
-    steps: 
-      - name: Set tag on workflow_dispatch
-        if: github.even_name == 'workflow_dispatch'
-        run: echo "${{ github.even.inputs.version }}"
-
-  build:
-    needs: prepare
-    runs-on: self-hosted
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: docker login
-        run: docker login -u supachai01 -p ${{ secrets.DOCKER_PASS }}
-      - name: build & push
-        run: |
-          cd Docker
-          docker build -t supachai01/githup_action:${{github.even.inputs.version }} .
-          docker push supachai01/githup_action:${{github.even.inputs.version }}
-
-  Deploy: 
-    needs: build
-    runs-on: self-hosted
-    steps:
-      - name: Deploy container
-        run: docker run -d -p 8080:80 supachai01/githup_action:${{github.even.inputs.version }}
+      version:
+        desccription: "image version"
+        deafault: 'v1.0.0'
+jobs:
+  runs-on: self-hosted
+  steps:
+    - name: docker login
+      run: docker login -u supachai01 -p 'Supachai@0017'
