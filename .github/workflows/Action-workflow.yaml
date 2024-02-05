@@ -32,7 +32,7 @@ jobs:
 
   Deploy: 
     needs: build
-    run-no: self-hosted
+    run-on: self-hosted
     steps:
       - name: Deploy container
         run: docker run -d -p 8080:80 supachai01/github_action:${{github.even.inputs.version }}
