@@ -12,7 +12,7 @@ jobs:
   prepare: 
     runs-on: self-hosted
     steps: 
-      - name: Set tag on workflow dispatch
+      - name: Set tag on workflow_dispatch
         if: githup.even_name == 'workflow_dispatch'
         run: echo "${{ githup.even.inputs.version }}"
 
