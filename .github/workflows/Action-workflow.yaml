@@ -6,7 +6,8 @@ on:
         desccription: "image version"
         deafault: 'v1.0.0'
 jobs:
-  runs-on: self-hosted
-  steps:
-    - name: docker login
-      run: docker login -u supachai01 -p 'Supachai@0017'
+  preapare
+    runs-on: self-hosted
+    steps:
+      - name: docker login
+        run: docker login -u supachai01 -p 'Supachai@0017'
