@@ -1,11 +1,11 @@
 name: Action-workflow
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       version:  
-        description: 'input version'
-        default: 'latest'
+        description: input version
+        default: latest
         required: true
 
 jobs: 
@@ -14,14 +14,14 @@ jobs:
     steps: 
       - name: Set tag on workflow_dispatch
         if: githup.even_name == 'workflow_dispatch'
-        run: echo "${{ githup.even.inputs.version }}"
+        run: echo ${{ githup.even.inputs.version }}
 
   build:
     needs: prepare
     runs-on: self-hosted
     steps:
       - name: checkout
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
       - name: docker login
         run: docker login -u supachai01 -p ${{ secrets.DOCKER_PASS }}
       - name: build & push
