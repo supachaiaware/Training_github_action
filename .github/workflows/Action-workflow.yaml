@@ -28,11 +28,11 @@ jobs:
         run: |
           cd Docker
           docker build -t supachai01/github_action:${{github.even.inputs.version }} .
-          docker push supachai01/github:${{ github.even.inputs.version }}
+          docker push supachai01/github_action:${{github.even.inputs.version }}
 
   Deploy: 
     needs: build
     run-no: self-hosted
     steps:
       - name: Deploy container
-        run: docker run -d -p 8080:80 supachai01/github:${{ github.even.inputs.version }}
+        run: docker run -d -p 8080:80 supachai01/github_action:${{github.even.inputs.version }}
