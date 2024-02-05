@@ -27,12 +27,12 @@ jobs:
       - name: build & push
         run: |
           cd Docker
-          docker build -t supachai01/github_action:${{github.even.inputs.version }} .
-          docker push supachai01/github_action:${{github.even.inputs.version }}
+          docker build -t supachai01/githup_action:${{github.even.inputs.version }} .
+          docker push supachai01/githup_action:${{github.even.inputs.version }}
 
   Deploy: 
     needs: build
     runs-on: self-hosted
     steps:
       - name: Deploy container
-        run: docker run -d -p 8080:80 supachai01/github_action:${{github.even.inputs.version }}
+        run: docker run -d -p 8080:80 supachai01/githup_action:${{github.even.inputs.version }}
