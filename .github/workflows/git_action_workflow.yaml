@@ -29,8 +29,8 @@ jobs:
           cd Docker
           pwd
           ls -la
-#          docker build -t supachai01/githup_action:${{ github.even.inputs.version }} .
-#          docker push supachai01/githup_action:${{ github.even.inputs.version }}
+          docker build -t supachai01/githup_action:${{ github.even.inputs.version }} .
+          docker push supachai01/githup_action:${{ github.even.inputs.version }}
 
   Deploy: 
     needs: build
