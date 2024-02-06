@@ -10,4 +10,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: docker login
-        run: docker login -u supachai01 -p 'Supachai@0017'
+        run: docker login -u supachai01 -p "${{ secrets.DOCKER_PASS }}"
