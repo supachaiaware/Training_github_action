@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "image version"
+        description: 'image version'
         default: 'v1.0.0'
+        required: true
 
 jobs: 
   prepare: 
