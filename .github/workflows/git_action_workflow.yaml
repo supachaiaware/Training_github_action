@@ -9,5 +9,24 @@ jobs:
   prepare:
     runs-on: self-hosted
     steps:
+      - name: check version
+        run: echo "${{ github.event.inputs.version }}"
+      - name: checkout
+        uses: actions/checkout@v3
       - name: docker login
         run: docker login -u supachai01 -p "${{ secrets.DOCKER_PASS }}"
+  
+  build:
+    runs-on: self-hosted
+    needs: pre-pare
+    steps: 
+      - name: build image
+        run: docker build -t  supachai01/githup_action:${{ github.event.inputs.version }} .
+      - name: push image 
+        run: docker push supachai01/githup_action:${{ github.event.inputs.version }}
+
+  # deploy:
+  #   needs: build
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: run container
