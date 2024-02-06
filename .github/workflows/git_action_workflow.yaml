@@ -36,5 +36,19 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
-      - name: Deploy container
-        run: docker run -d -p 8080:80 supachai01/githup_action:${{ github.event.inputs.version }}
+      - name:
+        run: |
+          echo "stop existing container"
+            if [ -z $(docker ps |grep supachai) ];then 
+              echo "no container running"
+            else
+              docker stop $(docker ps -a | grep supachai | awk -F ' ' '{print$1}')
+              docker rm $(docker ps -a | grep supachai | awk -F ' ' '{print$1}')
+              echo "stoped container"
+            fi
+          echo "start new container"
+            docker run -d -p 8080:80 supachai01/githup_action:${{ github.event.inputs.version }}
+          echo "deploy done"
+
+#      - name: Deploy container
+#        run: docker run -d -p 8080:80 supachai01/githup_action:${{ github.event.inputs.version }}
