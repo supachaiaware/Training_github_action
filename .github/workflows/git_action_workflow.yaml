@@ -15,8 +15,6 @@ jobs:
       - name: Set tag on workflow dispatch
         if: github.even_name == 'workflow_dispatch'
         run: echo "${{ github.even.inputs.version}}"
-      - name: docker login
-        run: docker login -u supachai01 -p "${{ secrets.DOCKER_PASS }}"
 
   build:
     needs: prepare
