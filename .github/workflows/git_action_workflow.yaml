@@ -22,7 +22,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: checkout
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
       - name: docker login
         run: docker login -u supachai01 -p ${{ secrets.DOCKER_PASS }}
       - name: build & push
@@ -33,7 +33,7 @@ jobs:
 
   Deploy: 
     needs: build
-    run-no: self-hosted
+    runs-on: self-hosted
     steps:
       - name: Deploy container
         run: docker run -d -p 8080:80 supachai01/githup:${{ github.even.inputs.version }}
