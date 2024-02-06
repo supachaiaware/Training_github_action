@@ -1,32 +1,39 @@
 name: workflow
+
 on:
   workflow_dispatch:
     inputs:
       version:
         description: "image version"
         default: 'v1.0.0'
-jobs:
-  prepare:
+
+jobs: 
+  prepare: 
     runs-on: self-hosted
-    steps:
-      - name: check version
-        run: echo "${{ github.event.inputs.version }}"
-      - name: checkout
-        uses: actions/checkout@v3
+    steps: 
+      - name: Set tag on workflow dispatch
+        if: github.even_name == 'workflow_dispatch'
+        run: echo "${{ github.even.inputs.version}}"
       - name: docker login
         run: docker login -u supachai01 -p "${{ secrets.DOCKER_PASS }}"
-  
-  build:
-    runs-on: self-hosted
-    needs: pre-pare
-    steps: 
-      - name: build image
-        run: docker build -t  supachai01/githup_action:${{ github.event.inputs.version }} .
-      - name: push image 
-        run: docker push supachai01/githup_action:${{ github.event.inputs.version }}
 
-  # deploy:
-  #   needs: build
-  #   runs-on: self-hosted
-  #   steps:
-  #     - name: run container
+  build:
+    needs: prepare
+    runs-on: self-hosted
+    steps:
+      - name: checkout
+        uses: action/checkout@v3
+      - name: docker login
+        run: docker login -u supachai01 -p ${{ secrets.DOCKER_PASS }}
+      - name: build & push
+        run: |
+          cd Docker
+          docker build -t supachai01/githup_action:${{ github.even.inputs.version }} .
+          docker push supachai01/githup:${{ github.even.inputs.version }}
+
+  Deploy: 
+    needs: build
+    run-no: self-hosted
+    steps:
+      - name: Deploy container
+        run: docker run -d -p 8080:80 supachai01/githup:${{ github.even.inputs.version }}
