@@ -1,0 +1,13 @@
+name: workflow
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "image version"
+        default: 'v1.0.0'
+jobs:
+  prepare:
+    runs-on: self-hosted
+    steps:
+      - name: docker login
+        run: docker login -u supachai01 -p 'Supachai@0017'
